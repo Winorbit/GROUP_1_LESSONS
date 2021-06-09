@@ -1,11 +1,12 @@
 from courses import Courses
 import requests
+from settings import bot_token
 
 class Bot(Courses):
     def __init__(self, country=""):
         self.country = country
-        super().__init__(country=country)
-        #super(Courses, self).__init__()
+        #super().__init__(country=country)
+        super(Courses, self).__init__()
 
     def actual_course_message(self, money_abbr:str="")->str:
         today_currency_info = self.today_currency_by_abbr(money_abbr=money_abbr)
@@ -21,10 +22,7 @@ class Bot(Courses):
 
         message = f"Cегодня {scale} {money_abbr} стоит {rate} {country_money}"
         return message
-    
-    def send_actual_course(self, money_abbr:str=""):
-        message = self.actual_course_message(money_abbr=money_abbr)
-        #send_text
+
 
 """
 bot = Bot(bot_token="", country="rb")
@@ -74,10 +72,28 @@ class TelegramBot(Bot):
         if res.status_code in (200,201):
             return res.json()
 
-
 """
-bot = TelegramBot(bot_token="1564817798:AAHsKi8dsB9ETgnDNEGDdS-R-jdyTuOwDJo", country="rb")
+bot = TelegramBot(bot_token=bot_token, country="rb")
 message = bot.actual_course_message(money_abbr="USD")
 print(message)
-print(bot.get_bot_info())
+print(bot.send_message(text_message=message))
 """
+"""
+bot = TelegramBot(bot_token=bot_token, country="rb")
+last_message_number = 0
+while True:
+    updates = bot.get_updates()
+    message_id = updates["result"][-1]["message"]["message_id"]
+    message_text = updates["result"][-1]["message"]["text"]
+
+    if message_id > last_message_number:
+        if "/курс" in message_text:
+            money_abbr = message_text[-3:]
+            actual_currency_message = bot.actual_course_message(money_abbr=money_abbr)
+            print(money_abbr)
+            bot.send_message(text_message=actual_currency_message)
+        last_message_number = message_id
+
+"""
+
+

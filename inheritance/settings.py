@@ -1,4 +1,7 @@
-bot_token = "1564817798:AAHsKi8dsB9ETgnDNEGDdS-R-jdyTuOwDJo" #not mine
+#bot_token = "1564817798:AAHsKi8dsB9ETgnDNEGDdS-R-jdyTuOwDJo" #not mine
+bot_token = "1705260768:AAFGd7eM7QTIn54UOW2W78EJUTao7M3jHm0" #mine
+
+
 
 side_weather_token = "886705b4c1182eb1c69f28eb8c520e20"
 
